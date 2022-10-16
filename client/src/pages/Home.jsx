@@ -1,32 +1,50 @@
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
 
 const Home = () => {
-  const posts = [
-    {
-      id: 1,
-      title: "Some title",
-      desc: "Some description",
-      img: "https://images.pexels.com/photos/13437426/pexels-photo-13437426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    },
-    {
-      id: 2,
-      title: "Some title",
-      desc: "Some description",
-      img: "https://images.pexels.com/photos/13437426/pexels-photo-13437426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    },
-    {
-      id: 3,
-      title: "Some title",
-      desc: "Some description",
-      img: "https://images.pexels.com/photos/13437426/pexels-photo-13437426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    },
-    {
-      id: 4,
-      title: "Some title",
-      desc: "Some description",
-      img: "https://images.pexels.com/photos/13437426/pexels-photo-13437426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    },
-  ];
+  const [posts, setPosts] = useState([]);
+
+  const cat = useLocation().search;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`/posts${cat}`);
+        setPosts(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, [cat]);
+
+  // const posts = [
+  //   {
+  //     id: 1,
+  //     title: "Some title",
+  //     desc: "Some description",
+  //     img: "https://images.pexels.com/photos/13437426/pexels-photo-13437426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Some title",
+  //     desc: "Some description",
+  //     img: "https://images.pexels.com/photos/13437426/pexels-photo-13437426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Some title",
+  //     desc: "Some description",
+  //     img: "https://images.pexels.com/photos/13437426/pexels-photo-13437426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "Some title",
+  //     desc: "Some description",
+  //     img: "https://images.pexels.com/photos/13437426/pexels-photo-13437426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  //   },
+  //];
   return (
     <div className="home">
       <div className="posts">
