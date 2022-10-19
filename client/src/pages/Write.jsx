@@ -14,7 +14,7 @@ const Write = () => {
       const formData = new FormData();
       formData.append("file", file);
       const res = await axios.post("/upload", formData);
-      console.log(res.data);
+      return res.data;
     } catch (err) {
       console.log(err);
     }
@@ -22,7 +22,10 @@ const Write = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    upload();
+    const imgUrl = upload();
+
+    try {
+    } catch (err) {}
   };
 
   return (
