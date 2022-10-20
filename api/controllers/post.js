@@ -1,11 +1,30 @@
 import { db } from "../db.js";
 import jwt from "jsonwebtoken";
 
-export const addPost = (req, res) => {};
+export const addPost = (req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json("Not authenticated!");
+
+  jwt.verify(token, "jwtkey", (err, userInfo) => {
+    if (err) return res.status(403).json("Invalid token.");
+
+    const q =
+      "insert into posts(`title`, `desc`, ìmg`, `cat`, `date`, `uid`) values (?)";
+
+    const values = [
+      req.body.title,
+      req.body.desc,
+      req.body.img,
+      req.body.cat,
+      req.body.date,
+      userInfo.id,
+    ];
+  });
+};
 
 export const getPost = (req, res) => {
   const q =
-    "select `username`, `title`, `desc`, p.img, u.img as userImg, `cat`, `date` from users u join posts p on u.id = p.uid where p.id = ?";
+    "select p.id, `username`, `title`, `desc`, p.img, u.img as userImg, `cat`, `date` from users u join posts p on u.id = p.uid where p.id = ?";
 
   db.query(q, [req.params.id], (err, data) => {
     if (err) return res.status(500).json(err);
