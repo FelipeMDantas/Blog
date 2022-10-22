@@ -42,7 +42,7 @@ const Login = () => {
         />
         <input
           required
-          type="text"
+          type="password"
           placeholder="password"
           name="password"
           onChange={handleChange}

@@ -9,7 +9,7 @@ export const addPost = (req, res) => {
     if (err) return res.status(403).json("Invalid token.");
 
     const q =
-      "insert into posts(`title`, `desc`, ìmg`, `cat`, `date`, `uid`) values (?)";
+      "insert into posts(`title`, `desc`, `img`, `cat`, `date`, `uid`) values (?)";
 
     const values = [
       req.body.title,
@@ -80,7 +80,7 @@ export const updatePost = (req, res) => {
 
     const postId = req.params.id;
     const q =
-      "update posts set `title`= ?, `desc`= ?, `img`= ?, `cat`= ?, where `id` = ? and `uid`= ?";
+      "update posts set `title`= ?, `desc`= ?, `img`= ?, `cat`= ? where `id` = ? and `uid`= ?";
 
     const values = [req.body.title, req.body.desc, req.body.img, req.body.cat];
 
